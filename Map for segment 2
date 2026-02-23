@@ -1,0 +1,22 @@
+' 2. Define the exact mapping provided (Steps 2 & 3) 
+    ' Original Risk Mappings
+    riskMap = Array("C11", "D11", "C15", "C21", "C26", "C31", "C36", "C41", "C46", "C51", "C56", "C36")
+    extractMap = Array("PEP_1", "PEP_2", "Sanc_1", "C22", "C27", "C32", "C37", "C42", "C47", "C52", "C57", "C37")
+
+    ' --- NEW SNIPPET START: ADDITIONAL OUTPUTS ---
+    Dim addHeadersArr As Variant
+    Dim addRangeArr As Variant
+    Dim lastAddRow As Long
+    
+    ' 1. Additional output Header Array (Ctrl+Down from anchor)
+    lastAddRow = engineWS.Range("Additional_Headers").End(xlDown).Row
+    If lastAddRow < engineWS.Rows.Count Then
+        addHeadersArr = engineWS.Range("Additional_Headers", engineWS.Cells(lastAddRow, engineWS.Range("Additional_Headers").Column)).Value
+    End If
+    
+    ' 2. Additional output Range Array (Ctrl+Down from anchor)
+    lastAddRow = engineWS.Range("Additional_Range").End(xlDown).Row
+    If lastAddRow < engineWS.Rows.Count Then
+        addRangeArr = engineWS.Range("Additional_Range", engineWS.Cells(lastAddRow, engineWS.Range("Additional_Range").Column)).Value
+    End If
+    ' --- NEW SNIPPET END ---
