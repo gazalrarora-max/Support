@@ -1,0 +1,24 @@
+' 8. Setup headers at the end of the file
+    lastRow = dataWS.Cells(dataWS.Rows.Count, 1).End(xlUp).Row
+    lastCol = dataWS.Cells(1, dataWS.Columns.Count).End(xlToLeft).Column
+    
+    ' Standard CRR Headers
+    dataWS.Cells(1, lastCol + 1).Value = "CRR Score"
+    dataWS.Cells(1, lastCol + 2).Value = "CRR Rating"
+
+    ' --- NEW SNIPPET START: ADDITIONAL HEADERS ---
+    Dim h As Long
+    Dim currentHeaderCol As Long
+    currentHeaderCol = lastCol + 3 ' Start placing additional headers after Score and Rating
+
+    ' Check if the array is allocated (not empty)
+    If IsArray(addHeadersArr) Then
+        For h = 1 To UBound(addHeadersArr, 1)
+            ' Only add if the cell value is not empty
+            If addHeadersArr(h, 1) <> "" Then
+                dataWS.Cells(1, currentHeaderCol).Value = addHeadersArr(h, 1)
+                currentHeaderCol = currentHeaderCol + 1
+            End If
+        Next h
+    End If
+    ' --- NEW SNIPPET END ---
