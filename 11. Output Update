@@ -1,0 +1,27 @@
+' 11. Store results (Score and Rating)
+        dataWS.Cells(iRow, lastCol + 1).Value = engineWS.Range("Overall_Score").Value
+        dataWS.Cells(iRow, lastCol + 2).Value = engineWS.Range("Overall_Rating").Value
+
+        ' --- NEW SNIPPET START: ADDITIONAL VALUES ---
+        Dim addValuesArr As Variant
+        Dim addrList As Variant
+        Dim k As Long
+
+        ' 1. Prepare address list and pass to GetEngineValues
+        If IsArray(addRangeArr) Then
+            ' Convert 2D Range Array to 1D Array for the Function
+            ReDim addrList(1 To UBound(addRangeArr, 1))
+            For k = 1 To UBound(addRangeArr, 1)
+                addrList(k) = addRangeArr(k, 1)
+            Next k
+
+            ' Generate the values array
+            addValuesArr = GetEngineValues(addrList)
+
+            ' 2. If null set (empty array) skip, else output next to CRR Rating
+            If Not (Not addValuesArr) Then ' Check if array is not null/empty
+                ' Output starting at lastCol + 3
+                dataWS.Cells(iRow, lastCol + 3).Resize(1, UBound(addValuesArr)).Value = addValuesArr
+            End If
+        End If
+        ' --- NEW SNIPPET END ---
