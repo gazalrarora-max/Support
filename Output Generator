@@ -1,0 +1,29 @@
+Function GetEngineValues(ByRef Input1 As Variant) As Variant
+    Dim engineWS As Worksheet
+    Dim Output1() As Variant
+    Dim i As Long
+    
+    ' Set reference to the sheet where this macro resides
+    Set engineWS = ThisWorkbook.Sheets("Automation")
+    
+    ' 1. Check if the input array is effectively empty/null
+    ' Checking for a single-element array containing a null string
+    If UBound(Input1) = LBound(Input1) And Input1(LBound(Input1)) = vbNullString Then
+        GetEngineValues = Array() ' Returns a null/empty array
+        Exit Function
+    End If
+    
+    ' 2. Else - Process the addresses
+    ' Resize Output1 to match the size of the address list provided
+    ReDim Output1(LBound(Input1) To UBound(Input1))
+    
+    ' b. Loop through each element in Input 1
+    For i = LBound(Input1) To UBound(Input1)
+        ' c. Get the value of each cell address passed
+        ' Using engineWS to ensure we pull from the Automation sheet
+        Output1(i) = engineWS.Range(Input1(i)).Value
+    Next i
+    
+    ' 3. Return Output 1
+    GetEngineValues = Output1
+End Function
